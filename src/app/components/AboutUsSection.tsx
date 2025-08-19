@@ -1,31 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { aboutData } from '../data/aboutData';
 
 export default function AboutUsSection() {
-  const [aboutData, setAboutData] = useState({
-    image: 'https://placehold.co/800x600/251C17/BF6C3E?text=Werkstatt',
-    title: 'Herzlich Willkommen bei Leder Schmiede',
-    paragraph1: 'Seit über 20 Jahren bin ich Ihre kompetente Ansprechpartnerin für hochwertige Sattler- und Polsterarbeiten. In meinem Meisterbetrieb verbinde ich traditionelles Handwerk mit modernen Techniken und Materialien, um individuelle Kundenwünsche zu erfüllen.',
-    paragraph2: 'Ob es um die Restauration eines Oldtimer-Innenraums, den Neubezug Ihrer Lieblingscouch oder eine maßgefertigte Motorradsitzbank geht – ich lege größten Wert auf Präzision, Langlebigkeit und Ästhetik.',
-    buttonText: 'Mehr über mich'
-  });
-
-  useEffect(() => {
-    // Charger les données depuis localStorage
-    const savedData = localStorage.getItem('hero_data');
-    if (savedData) {
-      const data = JSON.parse(savedData);
-      setAboutData({
-        image: data.aboutImage || aboutData.image,
-        title: data.aboutTitle || aboutData.title,
-        paragraph1: data.aboutParagraph1 || aboutData.paragraph1,
-        paragraph2: data.aboutParagraph2 || aboutData.paragraph2,
-        buttonText: data.aboutButtonText || aboutData.buttonText
-      });
-    }
-  }, []);
-
   return (
     <section id="about" className="relative py-20">
       {/* Démarcation supérieure simple */}
