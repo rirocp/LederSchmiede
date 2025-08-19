@@ -7,6 +7,7 @@ import { tAdmin } from './components/admin-i18n';
 interface GalleryItem {
   id: string;
   src: string;
+  title: string;
   description: string;
   category: string;
   order: number;
@@ -31,6 +32,7 @@ const categories = [
 ];
 
 export default function ImageUploader({ onSave, onCancel, mode, item }: ImageUploaderProps) {
+  const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('Innenausstattung');
   const [imageSrc, setImageSrc] = useState('');
@@ -41,11 +43,13 @@ export default function ImageUploader({ onSave, onCancel, mode, item }: ImageUpl
   // Mettre à jour les valeurs quand item change
   React.useEffect(() => {
     if (item) {
+      setTitle(item.title || '');
       setDescription(item.description || '');
       setCategory(item.category || 'Innenausstattung');
       setImageSrc(item.src || '');
     } else {
       // Réinitialiser pour une nouvelle image
+      setTitle('');
       setDescription('');
       setCategory('Innenausstattung');
       setImageSrc('');
@@ -80,6 +84,7 @@ export default function ImageUploader({ onSave, onCancel, mode, item }: ImageUpl
     if (mode === 'add') {
       onSave({
         src: imageSrc,
+        title: title.trim(),
         description: description.trim(),
         category
       });
@@ -87,6 +92,7 @@ export default function ImageUploader({ onSave, onCancel, mode, item }: ImageUpl
       onSave({
         ...item,
         src: imageSrc,
+        title: title.trim(),
         description: description.trim(),
         category
       });

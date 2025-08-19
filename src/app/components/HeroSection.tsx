@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { getHeroData } from '../data/heroData';
 
 export default function HeroSection() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -9,13 +10,10 @@ export default function HeroSection() {
   useEffect(() => {
     setIsLoaded(true);
     
-    // Charger l'image du hero depuis localStorage
-    const savedData = localStorage.getItem('hero_data');
-    if (savedData) {
-      const data = JSON.parse(savedData);
-      if (data.heroImage) {
-        setHeroImage(data.heroImage);
-      }
+    // Utiliser les données statiques
+    const heroData = getHeroData();
+    if (heroData.heroImage) {
+      setHeroImage(heroData.heroImage);
     }
   }, []);
 

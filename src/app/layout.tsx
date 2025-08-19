@@ -54,6 +54,11 @@ export const metadata: Metadata = {
   title: "Leder Schmiede - Sarah Röttig | Fahrzeugsattlerin",
   description: "Meisterbetrieb für anspruchsvolle Handwerkskunst in der Fahrzeugsattlerei",
   metadataBase: new URL('https://leder-schmiede.de'),
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
   openGraph: {
     title: "Leder Schmiede - Sarah Röttig",
     description: "Meisterbetrieb für anspruchsvolle Handwerkskunst in der Fahrzeugsattlerei",

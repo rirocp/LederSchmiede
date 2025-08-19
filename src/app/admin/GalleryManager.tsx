@@ -4,42 +4,18 @@ import React, { useState, useEffect } from 'react';
 import ImageUploader from './ImageUploader';
 import { useAdminLang } from './components/AdminLangContext';
 import { tAdmin } from './components/admin-i18n';
-
-interface GalleryItem {
-  id: string;
-  src: string;
-  description: string;
-  category: string;
-  order: number;
-}
+import { galleryData, GalleryItem } from '../data/galleryData';
 
 export default function GalleryManager() {
-  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
+  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>(galleryData);
   const [isAddingImage, setIsAddingImage] = useState(false);
   const [editingItem, setEditingItem] = useState<GalleryItem | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const { lang } = useAdminLang();
 
-  // Simuler le chargement des données depuis localStorage
+  // Utiliser les données statiques directement
   useEffect(() => {
-    const savedItems = localStorage.getItem('gallery_items');
-    if (savedItems) {
-      setGalleryItems(JSON.parse(savedItems));
-    } else {
-      // Données par défaut
-      const defaultItems: GalleryItem[] = [
-        { id: '1', src: '/images/gallery/innenausstattung-1.jpg', description: 'Innenausstattung - Luxuriöse Fahrzeugpolster', category: 'Innenausstattung', order: 1 },
-        { id: '2', src: '/images/gallery/sofa-1.jpg', description: 'Sofa Restauration - Professionelle Wiederherstellung', category: 'Reparaturen', order: 2 },
-        { id: '3', src: '/images/gallery/sessel-1.jpg', description: 'Sessel Arbeit - Individuelle Anpassungen', category: 'Anpassungen', order: 3 },
-        { id: '4', src: '/images/gallery/autositze-1.jpg', description: 'Autositze - Neubezug und Reparatur', category: 'Fahrzeugsattlerei', order: 4 },
-        { id: '5', src: '/images/gallery/motorrad-1.jpg', description: 'Motorradsitzbänke - Maßgefertigte Lösungen', category: 'Motorrad', order: 5 },
-        { id: '6', src: '/images/gallery/couch-1.jpg', description: 'Couch Restauration - Traditionelle Handwerkskunst', category: 'Reparaturen', order: 6 },
-        { id: '7', src: '/images/gallery/lenkrad-1.jpg', description: 'Lenkrad - Individuelle Gestaltung', category: 'Innenausstattung', order: 7 },
-        { id: '8', src: '/images/gallery/dachhimmel-1.jpg', description: 'Dachhimmel - Komplette Innenausstattung', category: 'Innenausstattung', order: 8 },
-      ];
-      setGalleryItems(defaultItems);
-      localStorage.setItem('gallery_items', JSON.stringify(defaultItems));
-    }
+    setGalleryItems(galleryData);
     setIsLoading(false);
   }, []);
 
@@ -158,7 +134,8 @@ export default function GalleryManager() {
 
               {/* Informations */}
               <div className="flex-grow min-w-0">
-                <h3 className="font-semibold text-[#251C17] truncate">{item.description}</h3>
+                <h3 className="font-semibold text-[#251C17] truncate">{item.title}</h3>
+                <p className="text-sm text-[#666666]">{item.description}</p>
                 <p className="text-sm text-[#666666]">{tAdmin('category', lang)}: {item.category}</p>
                 <p className="text-xs text-[#888888]">{tAdmin('reorder', lang)}: {item.order}</p>
               </div>

@@ -2,14 +2,14 @@ import React from 'react';
 import ServicePageContent from './ServicePageContent';
 
 interface ServicePageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 // Métadonnées dynamiques pour le SEO
 export async function generateMetadata({ params }: ServicePageProps) {
-  const { slug } = params;
+  const { slug } = await params;
   
   return {
     title: `Service - Leder Schmiede`,
@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: ServicePageProps) {
   };
 }
 
-export default function ServicePage({ params }: ServicePageProps) {
-  const { slug } = params;
+export default async function ServicePage({ params }: ServicePageProps) {
+  const { slug } = await params;
   return <ServicePageContent slug={slug} />;
 } 

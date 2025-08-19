@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { FacebookIcon, InstagramIcon, PhoneIcon, MailIcon } from './IconAssets';
+import { InstagramIcon, PhoneIcon, MailIcon } from './IconAssets';
 import { usePathname } from 'next/navigation';
 
 export default function Header() {
@@ -74,10 +74,7 @@ export default function Header() {
       <div className="transition-all duration-300 bg-[#251C17]/90 text-white text-xs py-3">
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <div className="flex items-center space-x-8">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" 
-               className="hover:text-[#AA8C5B] transition-colors duration-300">
-              <FacebookIcon />
-            </a>
+            
             <a href="https://www.instagram.com/leder_schmiede?igsh=NWx5ZDA5MjBndm42&utm_source=qr" target="_blank" rel="noopener noreferrer" 
                className="hover:text-[#AA8C5B] transition-colors duration-300">
               <InstagramIcon />

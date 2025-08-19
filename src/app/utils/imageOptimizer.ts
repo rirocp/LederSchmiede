@@ -36,7 +36,7 @@ export function optimizeImageForStorage(base64String: string, maxWidth: number =
   });
 }
 
-export function estimateStorageSize(data: any): number {
+export function estimateStorageSize(data: unknown): number {
   const jsonString = JSON.stringify(data);
   return new Blob([jsonString]).size;
 }

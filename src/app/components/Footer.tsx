@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { MapPinIcon, PhoneIcon, MailIcon, FacebookIcon, InstagramIcon } from './IconAssets';
+import { MapPinIcon, PhoneIcon, MailIcon, InstagramIcon } from './IconAssets';
 
 export default function Footer() {
   const scrollToSection = (sectionId: string) => {
@@ -74,9 +74,7 @@ export default function Footer() {
                               <li><Link href="/admin/secure" className="text-white hover:text-[#AA8C5B] transition-colors font-[var(--font-cormorant)]">Administration</Link></li>
             </ul>
             <div className="flex space-x-4">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-[#AA8C5B] transition-colors">
-                <FacebookIcon />
-              </a>
+
               <a href="https://www.instagram.com/leder_schmiede?igsh=NWx5ZDA5MjBndm42&utm_source=qr" target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-[#AA8C5B] transition-colors">
                 <InstagramIcon />
               </a>

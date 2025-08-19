@@ -179,8 +179,8 @@ export default function ThemeManager() {
   const getTranslatedThemes = (): Theme[] => {
     return predefinedThemes.map(theme => ({
       ...theme,
-      name: theme.id === 'artisan' ? `${tAdmin('artisan', lang)} (${tAdmin('current', lang)})` : tAdmin(theme.id as any, lang),
-      description: tAdmin(`${theme.id}Desc` as any, lang)
+      name: theme.id === 'artisan' ? `${tAdmin('artisan', lang)} (${tAdmin('current', lang)})` : theme.name,
+      description: theme.description
     }));
   };
 

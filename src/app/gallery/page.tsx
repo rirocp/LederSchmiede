@@ -1,50 +1,19 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import ImageWithFallback from '../components/ImageWithFallback';
 import Footer from '../components/Footer';
-
-interface GalleryItem {
-  id: string;
-  src: string;
-  description: string;
-  category: string;
-  order: number;
-}
+import { galleryData, getGalleryByCategory, getGalleryCategories, GalleryItem } from '../data/galleryData';
 
 // Note: Métadonnées SEO gérées par le layout parent
 
 export default function GalleryPage() {
   const [selectedCategory, setSelectedCategory] = useState('Alle');
-  const [galleryData, setGalleryData] = useState<GalleryItem[]>([]);
-
-  // Charger les données depuis localStorage
-  useEffect(() => {
-    const savedItems = localStorage.getItem('gallery_items');
-    if (savedItems) {
-      const items = JSON.parse(savedItems);
-      setGalleryData(items);
-    } else {
-      // Données par défaut si rien n'est sauvegardé
-      const defaultItems: GalleryItem[] = [
-        { id: '1', src: "/images/gallery/innenausstattung-1.jpg", description: "Innenausstattung - Luxuriöse Fahrzeugpolster", category: "Innenausstattung", order: 1 },
-        { id: '2', src: "/images/gallery/sofa-1.jpg", description: "Sofa Restauration - Professionelle Wiederherstellung", category: "Reparaturen", order: 2 },
-        { id: '3', src: "/images/gallery/sessel-1.jpg", description: "Sessel Arbeit - Individuelle Anpassungen", category: "Anpassungen", order: 3 },
-        { id: '4', src: "/images/gallery/autositze-1.jpg", description: "Autositze - Neubezug und Reparatur", category: "Fahrzeugsattlerei", order: 4 },
-        { id: '5', src: "/images/gallery/motorrad-1.jpg", description: "Motorradsitzbänke - Maßgefertigte Lösungen", category: "Motorrad", order: 5 },
-        { id: '6', src: "/images/gallery/couch-1.jpg", description: "Couch Restauration - Traditionelle Handwerkskunst", category: "Reparaturen", order: 6 },
-        { id: '7', src: "/images/gallery/lenkrad-1.jpg", description: "Lenkrad - Individuelle Gestaltung", category: "Innenausstattung", order: 7 },
-        { id: '8', src: "/images/gallery/dachhimmel-1.jpg", description: "Dachhimmel - Komplette Innenausstattung", category: "Innenausstattung", order: 8 }
-      ];
-      setGalleryData(defaultItems);
-    }
-  }, []);
-
-  // Filtrer les données selon la catégorie sélectionnée
-  const filteredData = selectedCategory === 'Alle' 
-    ? galleryData 
-    : galleryData.filter((item: GalleryItem) => item.category === selectedCategory);
+  
+  // Utiliser les données statiques directement
+  const filteredData = getGalleryByCategory(selectedCategory);
+  const categories = getGalleryCategories();
 
   return (
     <div className="min-h-screen bg-[#FAF6ED]">
@@ -54,12 +23,6 @@ export default function GalleryPage() {
         <div className="bg-[#251C17] text-white text-xs py-3">
           <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
             <div className="flex items-center space-x-8">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" 
-                 className="hover:text-[#AA8C5B] transition-colors duration-300">
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-              </a>
               <a href="https://www.instagram.com/leder_schmiede?igsh=NWx5ZDA5MjBndm42&utm_source=qr" target="_blank" rel="noopener noreferrer" 
                  className="hover:text-[#AA8C5B] transition-colors duration-300">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -193,36 +156,19 @@ export default function GalleryPage() {
               >
                 Alle
               </button>
-              <button 
-                onClick={() => setSelectedCategory('Fahrzeug')}
-                className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
-                  selectedCategory === 'Fahrzeug'
-                    ? 'bg-[#BF6C3E] text-white'
-                    : 'border-2 border-[#AA8C5B]/30 text-[#251C17] hover:bg-[#AA8C5B] hover:text-white'
-                }`}
-              >
-                Fahrzeug
-              </button>
-              <button 
-                onClick={() => setSelectedCategory('Motorrad')}
-                className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
-                  selectedCategory === 'Motorrad'
-                    ? 'bg-[#BF6C3E] text-white'
-                    : 'border-2 border-[#AA8C5B]/30 text-[#251C17] hover:bg-[#AA8C5B] hover:text-white'
-                }`}
-              >
-                Motorrad
-              </button>
-              <button 
-                onClick={() => setSelectedCategory('Möbel')}
-                className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
-                  selectedCategory === 'Möbel'
-                    ? 'bg-[#BF6C3E] text-white'
-                    : 'border-2 border-[#AA8C5B]/30 text-[#251C17] hover:bg-[#AA8C5B] hover:text-white'
-                }`}
-              >
-                Möbel
-              </button>
+              {categories.map((category) => (
+                <button 
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+                    selectedCategory === category
+                      ? 'bg-[#BF6C3E] text-white'
+                      : 'border-2 border-[#AA8C5B]/30 text-[#251C17] hover:bg-[#AA8C5B] hover:text-white'
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
             </div>
           </div>
 
@@ -258,7 +204,7 @@ export default function GalleryPage() {
                   {/* Contenu */}
                   <div className="p-6">
                     <h3 className="text-lg font-[var(--font-cinzel)] font-semibold text-[#251C17] mb-2 group-hover:text-[#BF6C3E] transition-colors duration-300">
-                      {item.description}
+                      {item.title || item.description}
                     </h3>
                     <p className="text-[#444444] font-[var(--font-cormorant)] text-sm leading-relaxed">
                       {item.description}

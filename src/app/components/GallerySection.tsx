@@ -1,40 +1,24 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
+import { galleryData } from '../data/galleryData';
 
 export default function GallerySection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [galleryItems, setGalleryItems] = useState<Array<{src: string, description: string}>>([]);
-
-  // Charger les données depuis localStorage
-  useEffect(() => {
-    const savedItems = localStorage.getItem('gallery_items');
-    if (savedItems) {
-      const items = JSON.parse(savedItems);
-      setGalleryItems(items);
-    } else {
-      // Données par défaut si rien n'est sauvegardé
-      const defaultItems = [
-        { src: "/images/gallery/innenausstattung-1.jpg", description: "Innenausstattung - Luxuriöse Fahrzeugpolster" },
-        { src: "/images/gallery/sofa-1.jpg", description: "Sofa Restauration - Professionelle Wiederherstellung" },
-        { src: "/images/gallery/sessel-1.jpg", description: "Sessel Arbeit - Individuelle Anpassungen" },
-        { src: "/images/gallery/autositze-1.jpg", description: "Autositze - Neubezug und Reparatur" },
-        { src: "/images/gallery/motorrad-1.jpg", description: "Motorradsitzbänke - Maßgefertigte Lösungen" },
-        { src: "/images/gallery/couch-1.jpg", description: "Couch Restauration - Traditionelle Handwerkskunst" },
-        { src: "/images/gallery/lenkrad-1.jpg", description: "Lenkrad - Individuelle Gestaltung" },
-        { src: "/images/gallery/dachhimmel-1.jpg", description: "Dachhimmel - Komplette Innenausstattung" }
-      ];
-      setGalleryItems(defaultItems);
-    }
-  }, []);
+  
+  // Utiliser les données statiques directement
+  const galleryItems = galleryData.map(item => ({
+    src: item.src,
+    description: item.description
+  }));
 
   const galleryImages = galleryItems.map(item => item.src);
   const imageDescriptions = galleryItems.map(item => item.description);
 
   // Auto-play functionality
-  useEffect(() => {
+  React.useEffect(() => {
     if (!isAutoPlaying) return;
     
     const interval = setInterval(() => {
